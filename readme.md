@@ -1,6 +1,6 @@
 # 브라우저의 이벤트 루프
 
-이벤트 루프관련 자료 모음입니다.
+이벤트 루프관련 자료 모음입니다.  
 발표자료 : https://drive.google.com/file/d/1DysiR8lffmCbN6SanAnjHNmGPOul9t_K/view?usp=sharing
 
 ## 테스트 코드
