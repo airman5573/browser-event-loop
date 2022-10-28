@@ -1,7 +1,7 @@
 # 브라우저의 이벤트 루프
 
 이벤트 루프관련 자료 모음입니다.  
-발표자료 : https://drive.google.com/file/d/1DysiR8lffmCbN6SanAnjHNmGPOul9t_K/view?usp=sharing
+발표자료 : [youtube link](https://www.youtube.com/watch?v=YpQTeIqjC4o)
 
 ## 테스트 코드
 - [MacroTask로 일을 쪼개서 하기](https://jsfiddle.net/MR_RPF/wd2qtkx0/8/)
@@ -34,16 +34,16 @@
 [비슷한 이벤트 끼리 따로 따로 다른 queue에 넣습니다](https://html.spec.whatwg.org/multipage/webappapis.html#task-source). 여러개 있고 브라우저가 우선순위에 맞게 queue에서 task를 가져와 처리합니다.  
 
 ### AnimationFrameQueue를 처리하다가 도중에 microTask가 MicroTaskQueue에 들어가면, 어떻게 그걸 먼저 실행하나요?
-[run the animation frame callbaks](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#run-the-animation-frame-callbacks)단계에서 handler를 [invoke](https://webidl.spec.whatwg.org/#invoke-a-callback-function)하는데, 14번째 step에서 [clean up after running script](https://html.spec.whatwg.org/multipage/webappapis.html#clean-up-after-running-script)단계에 들어가는데, 이때 3번째 항목에 execution context stack이 비어있을때 [perform a microtask checkpoint](https://html.spec.whatwg.org/multipage/webappapis.html#perform-a-microtask-checkpoint)을 한다. 다시말해서, AnimationFrameQueue에 들어있는 callback을 실행하고 execution context stack이 비게되면, micro task를 실행한다는 말이다.  
+[run the animation frame callbaks](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#run-the-animation-frame-callbacks)단계에서 handler를 [invoke](https://webidl.spec.whatwg.org/#invoke-a-callback-function)하는데, 14번째 step에서 [clean up after running script](https://html.spec.whatwg.org/multipage/webappapis.html#clean-up-after-running-script)단계에 들어가는데, 이때 3번째 항목에 execution context stack이 비어있을때 [perform a microtask checkpoint](https://html.spec.whatwg.org/multipage/webappapis.html#perform-a-microtask-checkpoint)을 합니다. 다시말해서, AnimationFrameQueue에 들어있는 callback을 실행하고 execution context stack이 비게되면, micro task를 실행합니다.  
 
 ### click event handler는 AnimationFrameQueue에 들어가나요?
 공식 문서에 나와있지는 않지만, [마치 그런것처럼 작동한다는 의견](https://stackoverflow.com/questions/71568745/animation-frame-queue-vs-micro-task-queue#comment126513157_71568840)이 있습니다.  
 
 ### addEventListener로 등록한 콜백 함수는 어디에 저장되나요?  
-- [공식 문서](https://dom.spec.whatwg.org/#eventtarget-event-listener-list)를 보면 EventTarget에 event listener list가 있다고 나온다. 여기에 담깁니다.
+- [공식 문서](https://dom.spec.whatwg.org/#eventtarget-event-listener-list)를 보면 EventTarget에 event listener list가 있다고 나옵니다. 여기에 담깁니다.
 - [공식 문서](https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-attributes)를 보면, EventTarget에 event handler들이 들어있는 event handler map이 있다고 나옵니다. 
 - 결론적으로 EventTarget에 담깁니다.
 
 ### 이벤트가 dispatch된후 처리되는 과정
-event target을 찾고, [propagation path](https://w3c.github.io/uievents/#propagation-path)가 결정된후, capture phase, target phase, bubble phase를 거치며 이벤트 객체와 함께 event listener가 호출된다.
+event target을 찾고, [propagation path](https://w3c.github.io/uievents/#propagation-path)가 결정된후, capture phase, target phase, bubble phase를 거치며 이벤트 객체와 함께 event listener가 호출됩니다.
 [참고문서](https://w3c.github.io/uievents/#event-flow)
